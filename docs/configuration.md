@@ -13,8 +13,10 @@ Everything is set up in the Home Assistant interface; no YAML is needed.
   device linked to your number later is added on its own.
 - **Devices to include**: the list used by "Only the devices I choose". Type part of a name to
   search it. Devices you leave out disappear from Home Assistant.
-- **Idle ULTRA status interval** (default 600 seconds, 60 to 3600): how often each ULTRA
-  device's inputs and gate position are read while nothing is happening. After any action the
+- **Idle ULTRA status interval** (default 300 seconds, 10 to 3600): how often each ULTRA
+  device's inputs and gate position are read while nothing is happening. An ULTRA device does not
+  report a change by itself, so a gate opened with a remote or a keypad shows at the next read:
+  set a short interval, down to 10 seconds, if you want that to show quickly. After any action the
   device is followed every 2 seconds for at least 30 seconds, and for as long as its position input
   reports movement (up to 3 minutes), so a slow door ends on its true position.
 

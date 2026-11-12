@@ -43,8 +43,11 @@ DEVICE_SCOPES: Final = (SCOPE_ALL, SCOPE_SMART, SCOPE_ULTRA, SCOPE_CHOSEN)
 # What the device step of sign-in has selected when it opens.
 SIGN_IN_DEVICE_SCOPE: Final = SCOPE_CHOSEN
 CONF_ULTRA_POLL_INTERVAL: Final = "ultra_poll_interval"  # seconds between reads of an idle module
-DEFAULT_ULTRA_POLL_INTERVAL: Final = 600
-MIN_ULTRA_POLL_INTERVAL: Final = 60
+# An ULTRA does not announce a change by itself: something done at the device (a remote, a
+# keypad) only shows at the next read. Five minutes suits most; an owner who wants such a change
+# to show within seconds can go down to ten, at the price of that many more requests all day.
+DEFAULT_ULTRA_POLL_INTERVAL: Final = 300
+MIN_ULTRA_POLL_INTERVAL: Final = 10
 MAX_ULTRA_POLL_INTERVAL: Final = 3600
 
 # --- polling (seconds) --------------------------------------------------------------------------

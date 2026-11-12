@@ -101,3 +101,22 @@ def test_an_operator_names_both_firmware_versions_unless_it_is_a_garage_door() -
     core_only = OperatorRecord(Operator.from_listing({"serialNumber": "S8", "deviceHardware": {"coreFirmwareVersion": "3.0.0.0"}}))
     assert core_only.firmware == "3.0.0.0"
     assert OperatorRecord(Operator.from_listing({"serialNumber": "S7"})).firmware is None
+
+
+def test_an_idle_ultra_is_read_every_five_minutes_and_no_faster_than_every_ten_seconds() -> None:
+    import types
+
+    from custom_components.mycentsys_cloud import const
+    from custom_components.mycentsys_cloud.coordinator import AccountHub
+
+    def seconds(options: dict) -> int:
+        return AccountHub.module_poll_seconds.fget(types.SimpleNamespace(entry=types.SimpleNamespace(options=options)))
+
+    assert (const.DEFAULT_ULTRA_POLL_INTERVAL, const.MIN_ULTRA_POLL_INTERVAL, const.MAX_ULTRA_POLL_INTERVAL) == (300, 10, 3600)
+    assert seconds({}) == 300
+    assert seconds({"ultra_poll_interval": 10}) == 10 and seconds({"ultra_poll_interval": "45"}) == 45
+    # Out of range or unreadable values are brought back inside it.
+    assert seconds({"ultra_poll_interval": 3}) == 10 and seconds({"ultra_poll_interval": 99999}) == 3600
+    assert seconds({"ultra_poll_interval": "soon"}) == 300
+    # The follow-up after an action from Home Assistant is unchanged: every 2 seconds, for at least 30.
+    assert (const.MODULE_BURST_STEP_SECONDS, const.MODULE_BURST_SECONDS, const.MODULE_BURST_MAX_SECONDS) == (2, 30, 180)
