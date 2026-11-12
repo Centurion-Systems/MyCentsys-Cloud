@@ -1,0 +1,6 @@
+# What the test suite needs beyond the standard library. Home Assistant itself is
+# stood in for by tests/ha_stub.py, so no Home Assistant install is required.
+pytest>=8
+aiohttp>=3.9
+paho-mqtt>=2.1
+cryptography>=42

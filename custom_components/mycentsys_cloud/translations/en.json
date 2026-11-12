@@ -1,0 +1,220 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sign in to MyCentsys",
+        "description": "Use the mobile number registered in the MyCentsys Remote app. Choose its country code, type the number in digits, and a one-time PIN is sent to it. The app keeps working as before, notifications included.",
+        "data": {
+          "country": "Country code",
+          "account_number": "Mobile number",
+          "pin_delivery": "Deliver the PIN by"
+        },
+        "data_description": {
+          "account_number": "Digits only, without spaces. A leading 0 is fine, for example 0820000000."
+        }
+      },
+      "pin": {
+        "title": "One-time PIN",
+        "description": "Type the PIN you have just received. Nothing yet? PINs only go to numbers registered in the MyCentsys Remote app, so check the number and the country.",
+        "data": {
+          "pin": "PIN"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Sign-in needed",
+        "description": "Home Assistant has been signed out of MyCentsys. A PIN is on its way to {number}; type it here and your devices come back.",
+        "data": {
+          "pin": "PIN"
+        }
+      },
+      "devices": {
+        "title": "Choose your devices",
+        "description": "This number has {count} device(s). Pick the ones you want, or include them all or only one kind. You can change this later under Configure.",
+        "data": {
+          "device_scope": "Include",
+          "devices": "Devices to include"
+        },
+        "data_description": {
+          "device_scope": "All, SMART only and ULTRA only keep following your account, so a device linked later is added on its own.",
+          "devices": "Used with \"Only the devices I choose\". Type part of a name to search, then tick each device you want."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "The MyCentsys cloud could not be reached. Check the internet connection and try again.",
+      "number_not_valid": "This number does not fit the selected country code. Check both and try again.",
+      "pin_rejected": "Wrong PIN. A PIN is cancelled after a few wrong attempts, so if this keeps happening go back and ask for a new one.",
+      "pin_not_sent": "No PIN was sent. Check the number and the country, then try again.",
+      "pin_throttled": "Too many PINs were requested for this number. Try again in a few minutes.",
+      "digits_only": "Use digits only: no spaces, plus sign or other characters.",
+      "nothing_chosen": "Choose at least one device, or pick one of the other options."
+    },
+    "abort": {
+      "already_configured": "Home Assistant is already signed in with this number.",
+      "reauth_successful": "You are signed in again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "MyCentsys Cloud settings",
+        "description": "Choose which devices Home Assistant includes and how often an idle ULTRA device is asked for its status. After an action a device is read every 2 seconds until it stops moving.",
+        "data": {
+          "device_scope": "Include",
+          "devices": "Devices to include",
+          "ultra_poll_interval": "Idle ULTRA status interval (seconds)"
+        },
+        "data_description": {
+          "device_scope": "All, SMART only and ULTRA only keep following your account, so a device linked later is added on its own.",
+          "devices": "Used with \"Only the devices I choose\". Type part of a name to search, then tick each device you want."
+        }
+      }
+    },
+    "error": {
+      "nothing_chosen": "Choose at least one device, or pick one of the other options."
+    }
+  },
+  "selector": {
+    "device_scope": {
+      "options": {
+        "all": "All devices",
+        "smart": "SMART operators only",
+        "ultra": "ULTRA devices only",
+        "chosen": "Only the devices I choose"
+      }
+    }
+  },
+  "issues": {
+    "nothing_linked": {
+      "title": "This number has no devices yet",
+      "description": "Sign-in worked, but MyCentsys has no gate, garage door or ULTRA device for this number.\n\nCheck the **MyCentsys Remote** app first. A device that is missing there has to be linked by its administrator: your number is added as a **remote user** of a SMART operator, or as an **access number** of a G-ULTRA or G-SPEAK ULTRA device. Pairing over Bluetooth alone does not link a device to the cloud.\n\nA device shows up here on its own about a minute after it is linked, and this message then goes away.\n\nWaiting for a gate someone **shared** with you? Make sure it was shared with exactly this number, and that the country chosen at sign-in matches the one in the app."
+    },
+    "shared_operator_view_only": {
+      "title": "A shared SMART gate can only be viewed",
+      "description": "Someone shared a **SMART** gate with this number. Home Assistant shows what the share allows (uses left and when it ends) but has no way to open the gate.\n\nShared SMART gates are opened by the MyCentsys Remote app over **Bluetooth, at the gate**. Neither the app nor Home Assistant can trigger them from a distance.\n\nShared **G-ULTRA** and **G-SPEAK ULTRA** gates work over the GSM network and can be controlled from here. If the SMART gate is your own, sign in with the number that owns it to get full control."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "reachable": {
+        "name": "Cloud connection"
+      }
+    },
+    "sensor": {
+      "position": {
+        "name": "Operator status",
+        "state": {
+          "unknown": "Unknown",
+          "open": "Open",
+          "closed": "Closed",
+          "partly_open": "Partly open",
+          "partly_closed": "Partly closed",
+          "opening": "Opening",
+          "closing": "Closing",
+          "learning": "Learning limits",
+          "position_lost": "Position lost"
+        }
+      },
+      "tamper": {
+        "name": "Tamper alarm",
+        "state": {
+          "armed": "Armed",
+          "disarmed": "Off",
+          "triggered": "Triggered",
+          "disabled": "Disabled",
+          "unknown": "Unknown"
+        }
+      },
+      "mains": {
+        "name": "Mains",
+        "state": {
+          "normal": "On",
+          "low": "Low",
+          "off": "Off",
+          "unknown": "Unknown"
+        }
+      },
+      "last_contact": {
+        "name": "Last contact"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi signal"
+      },
+      "battery": {
+        "name": "Battery"
+      },
+      "ultra_supply": {
+        "name": "Supply voltage"
+      },
+      "ultra_signal": {
+        "name": "Signal strength"
+      },
+      "ultra_link": {
+        "name": "Connection"
+      },
+      "ultra_call_credits": {
+        "name": "Tokens left (calls)"
+      },
+      "ultra_sms_credits": {
+        "name": "Tokens left (SMS)"
+      },
+      "ultra_balance": {
+        "name": "Network balance"
+      },
+      "health": {
+        "name": "Health",
+        "state": {
+          "good": "Good",
+          "attention": "Attention",
+          "unknown": "Unknown"
+        }
+      }
+    },
+    "button": {
+      "open": {
+        "name": "Open"
+      },
+      "close": {
+        "name": "Close"
+      },
+      "pedestrian": {
+        "name": "Pedestrian"
+      },
+      "clear_alarms": {
+        "name": "Clear alarms"
+      },
+      "cancel_auto_close": {
+        "name": "Cancel auto-close"
+      },
+      "cancel_pirac": {
+        "name": "Cancel PIRAC"
+      },
+      "cancel_auto_close_pirac": {
+        "name": "Cancel auto-close and PIRAC"
+      },
+      "autoclose_override": {
+        "name": "Override auto-close"
+      },
+      "ultra_tokens": {
+        "name": "Refresh tokens"
+      },
+      "ultra_balance": {
+        "name": "Refresh network balance"
+      },
+      "ultra_configuration": {
+        "name": "Refresh configuration"
+      }
+    },
+    "switch": {
+      "holiday_lock": {
+        "name": "Holiday lock"
+      },
+      "keep_open": {
+        "name": "Keep open"
+      },
+      "tamper_alarm": {
+        "name": "Tamper alarm armed"
+      }
+    }
+  }
+}

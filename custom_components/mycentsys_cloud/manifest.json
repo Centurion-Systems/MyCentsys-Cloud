@@ -1,0 +1,20 @@
+{
+  "domain": "mycentsys_cloud",
+  "name": "MyCentsys Cloud",
+  "codeowners": [
+    "@Centurion-Systems"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/Centurion-Systems/MyCentsys-Cloud#readme",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Centurion-Systems/MyCentsys-Cloud/issues",
+  "loggers": [
+    "paho"
+  ],
+  "requirements": [
+    "paho-mqtt>=2.1"
+  ],
+  "version": "1.0.0"
+}
