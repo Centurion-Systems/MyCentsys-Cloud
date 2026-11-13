@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (2026-11-13)
+
+- **G-ULTRA and G-SPEAK ULTRA**: a device that is idle is now read every 5 minutes by default
+  (was 10), and the interval under Configure can be set as low as 10 seconds (was 60). An ULTRA
+  device does not report a change by itself, so a short interval is how a gate opened with a
+  remote or a keypad shows up quickly. The follow-up every 2 seconds after an action sent from
+  Home Assistant is unchanged. An install that has saved its options keeps the interval it saved.
+
 ## 1.0.0 (2026-11-11) — first release
 
 MyCentsys Cloud brings Centurion Systems gate and garage door operators and G-ULTRA /
